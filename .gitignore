@@ -3,6 +3,7 @@ test_run_dir/*
 .bsp/
 .idea/
 build/
+generated/verification
 
 ### XilinxISE template
 # intermediate build files
