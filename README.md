@@ -8,6 +8,12 @@ working, modern and modified code from the outdated [Chisel Bootcamp](https://gi
 For the sake of documenting the learning steps, here is what I 
 learned in each module.
 
+## Arbiter
+* Given a FIFO and various PE signals, distribute data with priority.
+* Using Bundled IO
+
+## MAC
+* A general Multiply-Accumulate component.
 
 ## CombLogic
 * How Scala's and Chisel's datatypes differ.
