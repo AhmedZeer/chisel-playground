@@ -8,6 +8,11 @@ working, modern and modified code from the outdated [Chisel Bootcamp](https://gi
 For the sake of documenting the learning steps, here is what I 
 learned in each module.
 
+## SeqLog
+* Used various register types : `Reg(), RegInit() and RegNext()`.
+* Implemented a Shift Register.
+* Implemented a Max module
+
 ## StateMachine
 * Simulating a state machine using flow control.
 * Basic mapping and enum operations for states.
