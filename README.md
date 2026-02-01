@@ -8,6 +8,19 @@ working, modern and modified code from the outdated [Chisel Bootcamp](https://gi
 For the sake of documenting the learning steps, here is what I 
 learned in each module.
 
+## Parameterization & Generators
+* Writing generic & parametric hardware modules.
+* Conditional parameters with `Some()` or `None`.
+* Using `match` statement for decision-making.
+* `Bool` VS. `Boolean`, the former is CHISEL's dtype and the latter is Scala's.
+* `0 Width` wires reflection at Verilog elaboration.
+* `+&` and `-&` operators for passing the sum/sub with carry.
+* `case` classes and `implicit` args.
+
+## Finite Impulse Response (FIR) Filter
+* Used `RegNext()` modules to implement a Shift Register.
+* Basic MAC operations to implement delayed signal convolution.
+
 ## SeqLog
 * Used various register types : `Reg(), RegInit() and RegNext()`.
 * Implemented a Shift Register.
