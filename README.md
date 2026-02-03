@@ -8,6 +8,14 @@ working, modern and modified code from the outdated [Chisel Bootcamp](https://gi
 For the sake of documenting the learning steps, here is what I 
 learned in each module.
 
+## Collections
+* Used `Vec` and `Seq` by Chisel and Scala respectively, to implement different hardware generators.
+* The `Seq` Scala approach provides *static* parametrization, where the hardware cant take different input without compilation again.
+* `Vec` on the other hand generates a *real* hardware that can interact with dynamic input.
+* The latter is more expensive and prohibitive than the former.
+* Used GoldenModel software model to cross-check check the hardware's output.
+* Used Scala's `mutable.ArrayBuffer()` to dynamically add hardware static collections
+
 ## Parameterization & Generators
 * Writing generic & parametric hardware modules.
 * Conditional parameters with `Some()` or `None`.

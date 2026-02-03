@@ -1,71 +1,44 @@
 package FIRSpec
 
-import FIR._
+import Collections._
 import chisel3._
 import chisel3.simulator.scalatest.ChiselSim
 import org.scalatest.funspec.AnyFunSpec
 
 class FIRSpec extends AnyFunSpec with ChiselSim {
 
-  describe("FIR"){
-    it("0 weighted sum."){
-      simulate(new FIR(0, 0, 0, 0)) { c =>
-        c.io.in.poke(0.U)
-        c.io.out.expect(0.U)
-        c.clock.step(1)
-        c.io.in.poke(4.U)
-        c.io.out.expect(0.U)
-        c.clock.step(1)
-        c.io.in.poke(5.U)
-        c.io.out.expect(0.U)
-        c.clock.step(1)
-        c.io.in.poke(2.U)
-        c.io.out.expect(0.U)
+  val weights = Seq(1, 1, 1, 1)
+  val goldenModel = new ScalaFIR(weights)
+
+  describe("FIR") {
+    it("Golden Model Comparison.") {
+      simulate(new FIR(weights, 8)) { c =>
+        for (i <- 0 until 100) {
+          val input = scala.util.Random.nextInt(8)
+          val goldenModelResult = goldenModel.poke(input)
+
+          c.io.in.poke(input.U)
+          c.io.out.expect(goldenModelResult.U, s"i $i, input $input, gm $goldenModelResult, ${c.io.out.peek().litValue}")
+          c.clock.step(1)
+        }
       }
     }
 
-    it("1 weighted sum"){
-      simulate(new FIR(1, 1, 1, 1)) { c =>
-        c.io.in.poke(1.U)
-        c.io.out.expect(1.U)  // 1, 0, 0, 0
-        c.clock.step(1)
-        c.io.in.poke(4.U)
-        c.io.out.expect(5.U)  // 4, 1, 0, 0
-        c.clock.step(1)
-        c.io.in.poke(3.U)
-        c.io.out.expect(8.U)  // 3, 4, 1, 0
-        c.clock.step(1)
-        c.io.in.poke(2.U)
-        c.io.out.expect(10.U)  // 2, 3, 4, 1
-        c.clock.step(1)
-        c.io.in.poke(7.U)
-        c.io.out.expect(16.U)  // 7, 2, 3, 4
-        c.clock.step(1)
-        c.io.in.poke(0.U)
-        c.io.out.expect(12.U)  // 0, 7, 2, 3
+    it("Golden Model Comparison2.") {
+      simulate(new FIRv2(weights.length, 8)) { c =>
+        c.io.weights(0).poke(1.U)
+        c.io.weights(1).poke(1.U)
+        c.io.weights(2).poke(1.U)
+        c.io.weights(3).poke(1.U)
+        for(i <- 0 until 100) {
+          val input = scala.util.Random.nextInt(8)
+          val goldenModelResult = goldenModel.poke(input)
+          c.io.in.poke(input.U)
+          c.io.out.expect(goldenModelResult.U, s"i $i, input $input, gm $goldenModelResult, ${c.io.out.peek().litValue}")
+          c.clock.step(1)
+        }
       }
-    }
 
-    it("custom weighted sum"){
-      simulate(new FIR(1, 2, 3, 4)) {c =>
-        c.io.in.poke(1.U)
-        c.io.out.expect(1.U)  // 1*1, 0*2, 0*3, 0*4
-        c.clock.step(1)
-        c.io.in.poke(4.U)
-        c.io.out.expect(6.U)  // 4*1, 1*2, 0*3, 0*4
-        c.clock.step(1)
-        c.io.in.poke(3.U)
-        c.io.out.expect(14.U)  // 3*1, 4*2, 1*3, 0*4
-        c.clock.step(1)
-        c.io.in.poke(2.U)
-        c.io.out.expect(24.U)  // 2*1, 3*2, 4*3, 1*4
-        c.clock.step(1)
-        c.io.in.poke(7.U)
-        c.io.out.expect(36.U)  // 7*1, 2*2, 3*3, 4*4
-        c.clock.step(1)
-        c.io.in.poke(0.U)
-        c.io.out.expect(32.U)  // 0*1, 7*2, 2*3, 3*4
-      }
     }
   }
 }
