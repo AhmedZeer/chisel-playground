@@ -8,6 +8,20 @@ working, modern and modified code from the outdated [Chisel Bootcamp](https://gi
 For the sake of documenting the learning steps, here is what I 
 learned in each module.
 
+## MyRoutingArbiter
+* We implemented the FIR using `for` loops to calculate the accumulation and multiplications.
+* However, Scala has `High-Order Functions` that makes it easier for us to iterate through collections.
+* `.map()`, `.map{case(a,b) => a+b}`, `.filter`, `.fold`, `.zipWithIndex`, `.reduce` etc. can be used to generate and manipulate Hardware.
+* New FIR can be implemented with `io.out := (io.const zip taps).map{case(a, b) => }.reduce(_ + _)`, for example.
+* This eliminates all the for loops required previously and provides more compact form.
+* **Ready-Valid** Protocol for communication between digital modules is implemented in Chisel with `DecoupledIO`.
+* A `Decoupled` consists of `bits: Output(), valid :Output() and ready: Input()` submodules.
+* Using `Flipped(Decoupled)` reverses the functionality of each submodule from Input to Output and vice versa.
+
+## RegisterFile
+* Parameterized by the number of Read Ports, this module implements *RV32I* style of a register file.
+* Implements the output read ports using `Vec`
+
 ## Collections
 * Used `Vec` and `Seq` by Chisel and Scala respectively, to implement different hardware generators.
 * The `Seq` Scala approach provides *static* parametrization, where the hardware cant take different input without compilation again.
