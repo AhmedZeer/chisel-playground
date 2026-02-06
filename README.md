@@ -8,6 +8,10 @@ working, modern and modified code from the outdated [Chisel Bootcamp](https://gi
 For the sake of documenting the learning steps, here is what I 
 learned in each module.
 
+## Neuron
+* Integrating custom High-Order Functions into Hardware modules.
+* Implemented an artificial neuron and passed its activation function as a parameter.
+
 ## MyRoutingArbiter
 * We implemented the FIR using `for` loops to calculate the accumulation and multiplications.
 * However, Scala has `High-Order Functions` that makes it easier for us to iterate through collections.
